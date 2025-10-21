@@ -1,98 +1,93 @@
-# SIFwear
-টাকায় নয় পরনে জিতুন!
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Online Shop</title>
+<title>Sifwear Online Shop</title>
 <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
-    header { background: #ff6f61; color: white; text-align: center; padding: 20px; }
-    .shop-container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
-    .product { background: white; margin: 10px; padding: 10px; width: 200px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); text-align: center; }
-    .product img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
-    .product h3 { margin: 10px 0 5px; }
-    .product p { margin: 5px 0; }
-    .btn { background: #ff6f61; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-    .btn:hover { background: #ff3b2e; }
-    #orderForm { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
-    #orderForm div { background: white; padding: 20px; border-radius: 10px; width: 300px; }
-    #orderForm input, #orderForm select { width: 100%; padding: 10px; margin: 5px 0; }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+  header { background:#222; color:white; padding:20px; text-align:center; }
+  h1 { margin:0; }
+  .products { display:flex; flex-wrap:wrap; justify-content:center; padding:20px; gap:20px; }
+  .product { background:white; padding:15px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:200px; text-align:center; }
+  .product img { width:100%; border-radius:10px; }
+  .product button { margin-top:10px; padding:10px; width:100%; background:#222; color:white; border:none; border-radius:5px; cursor:pointer; }
+  form { max-width:400px; margin:20px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+  input, select { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ccc; }
+  button.submit { background:#222; color:white; border:none; padding:10px; width:100%; border-radius:5px; cursor:pointer; }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>আমার অনলাইন শপ</h1>
+  <h1>Sifwear</h1>
+  <p>Professional Online Clothing Shop</p>
 </header>
 
-<div class="shop-container" id="shop"></div>
+<section class="products">
+  <div class="product">
+    <img src="https://via.placeholder.com/200x200.png?text=T-Shirt" alt="T-Shirt">
+    <h3>T-Shirt</h3>
+    <p>৳500</p>
+    <button onclick="order('T-Shirt',500)">Order Now</button>
+  </div>
+  <div class="product">
+    <img src="https://via.placeholder.com/200x200.png?text=Hoodie" alt="Hoodie">
+    <h3>Hoodie</h3>
+    <p>৳1200</p>
+    <button onclick="order('Hoodie',1200)">Order Now</button>
+  </div>
+  <div class="product">
+    <img src="https://via.placeholder.com/200x200.png?text=Pant" alt="Pant">
+    <h3>Pant</h3>
+    <p>৳800</p>
+    <button onclick="order('Pant',800)">Order Now</button>
+  </div>
+</section>
 
-<!-- অর্ডার ফর্ম -->
-<div id="orderForm">
-    <div>
-        <h3>অর্ডার ফর্ম</h3>
-        <input type="text" id="customerName" placeholder="আপনার নাম" required>
-        <input type="text" id="customerPhone" placeholder="মোবাইল নম্বর" required>
-        <select id="paymentMethod">
-            <option value="bkash">বিকাশ</option>
-            <option value="nagad">নগদ</option>
-        </select>
-        <p id="selectedProduct"></p>
-        <button class="btn" onclick="submitOrder()">অর্ডার করুন</button>
-        <button class="btn" style="background:#999;margin-top:5px;" onclick="closeForm()">বাতিল</button>
-    </div>
-</div>
+<form id="orderForm" style="display:none;">
+  <h2>Complete Your Order</h2>
+  <input type="text" id="productName" readonly>
+  <input type="number" id="productPrice" readonly>
+  <input type="text" placeholder="Your Name" id="name" required>
+  <input type="text" placeholder="Phone Number" id="phone" required>
+  <input type="text" placeholder="Address" id="address" required>
+  <select id="payment" required>
+    <option value="">Select Payment Method</option>
+    <option value="bKash">bKash</option>
+    <option value="Nagad">Nagad</option>
+    <option value="Cash on Delivery">Cash on Delivery</option>
+  </select>
+  <button class="submit" type="button" onclick="submitOrder()">Place Order</button>
+</form>
 
 <script>
-// প্রোডাক্ট ডেটা
-let products = [
-    {id:1, name:"শার্ট", price:500, img:"https://via.placeholder.com/200x150?text=Shirt"},
-    {id:2, name:"প্যান্ট", price:800, img:"https://via.placeholder.com/200x150?text=Pants"},
-    {id:3, name:"শু", price:1200, img:"https://via.placeholder.com/200x150?text=Shoes"}
-];
+  function order(name, price) {
+    document.getElementById('orderForm').style.display='block';
+    document.getElementById('productName').value = name;
+    document.getElementById('productPrice').value = price;
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
 
-let selectedProduct = null;
+  function submitOrder() {
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const product = document.getElementById('productName').value;
+    const price = document.getElementById('productPrice').value;
+    const payment = document.getElementById('payment').value;
 
-function loadShop() {
-    let shop = document.getElementById('shop');
-    shop.innerHTML = '';
-    products.forEach(product => {
-        let div = document.createElement('div');
-        div.className = 'product';
-        div.innerHTML = `
-            <img src="${product.img}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>মূল্য: ${product.price} টাকা</p>
-            <button class="btn" onclick="openForm(${product.id})">অর্ডার</button>
-        `;
-        shop.appendChild(div);
-    });
-}
+    if(!name || !phone || !address || !payment){
+      alert('Please fill all fields!');
+      return;
+    }
 
-function openForm(id){
-    selectedProduct = products.find(p => p.id === id);
-    document.getElementById('selectedProduct').innerText = `পণ্য: ${selectedProduct.name}, দাম: ${selectedProduct.price} টাকা`;
-    document.getElementById('orderForm').style.display = 'flex';
-}
-
-function closeForm(){
-    document.getElementById('orderForm').style.display = 'none';
-}
-
-function submitOrder(){
-    let name = document.getElementById('customerName').value;
-    let phone = document.getElementById('customerPhone').value;
-    let payment = document.getElementById('paymentMethod').value;
-
-    if(!name || !phone) { alert("সব ফিল্ড পূরণ করুন"); return; }
-
-    alert(`অর্ডার হয়েছে!\nপণ্য: ${selectedProduct.name}\nমূল্য: ${selectedProduct.price} টাকা\nপেমেন্ট: ${payment}\nনাম: ${name}\nফোন: ${phone}`);
-    closeForm();
-}
-
-window.onload = loadShop;
+    alert(`Order Placed!\n\nProduct: ${product}\nPrice: ৳${price}\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\nPayment: ${payment}\n\nWe will contact you soon!`);
+    
+    // Clear form
+    document.getElementById('orderForm').reset();
+    document.getElementById('orderForm').style.display='none';
+  }
 </script>
 
 </body>
